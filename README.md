@@ -8,7 +8,7 @@ Curso ZF UPC Mayo 2016
 	DocumentRoot "C:\www"
 
 2. Directivas de directorio para document root
-	
+<code>	
 	<Directory "C:\www">
     #
     # Possible values for the Options directive are "None", "All",
@@ -35,7 +35,7 @@ Curso ZF UPC Mayo 2016
     Order allow,deny
     Allow from all
 	</Directory>
- 
+</code>
  
  
 # Configuracion del VirtualHost

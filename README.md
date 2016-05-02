@@ -7,7 +7,8 @@ Curso ZF UPC Mayo 2016
  Tipicamente en /Some/path/zend/apache/conf/httpd.conf
  
 1. Document Root
-	DocumentRoot "C:\www"
+ 
+ DocumentRoot "C:\www"
 
 2. Directivas de directorio para document root
 

@@ -3,7 +3,7 @@ Curso ZF UPC Mayo 2016
 
 # Configuracion del VirtualHost
 
-<pre>
+<code>
 
 	<VirtualHost *:80>
 	    ServerAdmin agustincl@gmail.com
@@ -19,5 +19,5 @@ Curso ZF UPC Mayo 2016
 		</Directory>
 	</VirtualHost>
 
-</pre>
+</code>
 

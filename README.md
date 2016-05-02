@@ -12,32 +12,14 @@ Curso ZF UPC Mayo 2016
 2. Directivas de directorio para document root
 
 <code>	
-	<Directory "C:\www">
-    #
-    # Possible values for the Options directive are "None", "All",
-    # or any combination of:
-    #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
-    #
-    # Note that "MultiViews" must be named *explicitly* --- "Options All"
-    # doesn't give it to you.
-    #
-    # The Options directive is both complicated and important.  Please see
-    # http://httpd.apache.org/docs/2.2/mod/core.html#options
-    # for more information.
-    #
+
+<Directory "C:\www">
     Options Indexes FollowSymLinks
-    #
-    # AllowOverride controls what directives may be placed in .htaccess files.
-    # It can be "All", "None", or any combination of the keywords:
-    #   Options FileInfo AuthConfig Limit
-    #
     AllowOverride All
-    #
-    # Controls who can get stuff from this server.
-    #
     Order allow,deny
     Allow from all
-	</Directory>
+</Directory>
+
 </code>
  
  

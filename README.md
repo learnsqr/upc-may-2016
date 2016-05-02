@@ -2,6 +2,8 @@
 Curso ZF UPC Mayo 2016
 
 # Configuracion del VirtualHost
+
+<pre>
 <VirtualHost *:80>
     ServerAdmin agustincl@gmail.com
     DocumentRoot "C:\www\proyecto1\public"
@@ -15,6 +17,5 @@ Curso ZF UPC Mayo 2016
     		Allow from all
 	</Directory>
 </VirtualHost>
-
-
+</pre>
 

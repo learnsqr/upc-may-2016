@@ -3,11 +3,14 @@ Curso ZF UPC Mayo 2016
 
 
 # Modificaciones en http.conf
+
  Tipicamente en /Some/path/zend/apache/conf/httpd.conf
+ 
 1. Document Root
 	DocumentRoot "C:\www"
 
 2. Directivas de directorio para document root
+
 <code>	
 	<Directory "C:\www">
     #

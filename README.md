@@ -12,14 +12,12 @@ Curso ZF UPC Mayo 2016
 2. Directivas de directorio para document root
 
 <code>	
-
-<Directory "C:\www">
+    <Directory "C:\www">
     Options Indexes FollowSymLinks
     AllowOverride All
     Order allow,deny
     Allow from all
-</Directory>
-
+    </Directory>
 </code>
  
  

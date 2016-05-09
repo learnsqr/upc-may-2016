@@ -1,10 +1,12 @@
 # Configuracion de apache
 
-AllowOverride None
-AllowOverride FileInfo
+1 .AllowOverride None
+2. AllowOverride FileInfo
 
-# Aplicacion SKELETON
-php composer.phar create-project --stability="dev" zendframework/skeleton-application path/to/install
+# Applicacion SKELETON
+
+Crear el proyecto con SKELETOn
+ php composer.phar create-project --stability="dev" zendframework/skeleton-application path/to/install
 
  php composer.phar self-update
  php composer.phar install

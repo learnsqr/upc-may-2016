@@ -1,1 +1,34 @@
-esto es index album
+<?php
+$title = 'My album list';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p><a href="<?php echo $this->url('album', array(
+        'action'=>'add'));?>">Add new item</a></p>
+
+
+<table class="table">
+<tr>
+    <th>Album</th>
+    <th>Id</th>
+    <th>Options</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($albums as $album): ?>
+<tr>
+    <td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>">
+            <?php echo $this->escapeHtml($album->title); ?></a>
+    </td>
+    <td><?php echo $this->escapeHtml($album->id); ?></td>
+    <td>
+        <a href="<?php echo $this->url('album',
+            array('action'=>'delete', 'id' => $album->id));?>">Delete</a>
+            | 
+        <a href="<?php echo $this->url('album',
+            array('action'=>'edit', 'id' => $album->id));?>">Update</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>

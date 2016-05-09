@@ -6,7 +6,7 @@ use Zend\View\Model\ViewModel;
 
 class AlbumController extends AbstractActionController
 {
-    public function indexAction()
+    public function indexsAction()
     {
         echo "aqui";
         
@@ -20,6 +20,16 @@ class AlbumController extends AbstractActionController
         
         return new ViewModel();
     }
+    
+    
+    public function indexAction()
+    {
+        $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+        $data = $mapper->fetchAll();
+        
+        return new ViewModel(array('albums' => $data));
+    }
+    
     
     public function insertAction()
     {

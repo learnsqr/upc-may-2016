@@ -6,5 +6,5 @@ class AlbumEntity
     public $id;
     public $artist;
     public $title;
+    
 }
-

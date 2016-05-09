@@ -28,7 +28,7 @@ class AlbumMapper
         $this->adapterSlave = $adapterSlave;
     }
     
-   
+    
     public function fetchAll($filter=null)
     {    
         $select = new Select($this->tableName);
@@ -64,6 +64,59 @@ class AlbumMapper
         $collection = $class->newInstance($paginatorAdapter);
     
         return $collection;
+    }
+    
+    public function save(AlbumEntity $album)
+    {
+        $hydrator = new ClassMethods();
+        $data = $hydrator->extract($album);
+    
+        if ($album->id) {
+            // update action
+            $action = $this->sql->update();
+            $action->set($data);
+            $action->where(array('id' => $album->getId()));
+        } else {
+            // insert action
+            $action = $this->sql->insert();
+            unset($data['id']);
+            $action->values($data);
+        }
+        $statement = $this->sql->prepareStatementForSqlObject($action);
+        $result = $statement->execute();
+    
+        if (!$album->id) {
+            $album->id=$result->getGeneratedValue();
+        }
+        return $result;
+    
+    }
+    
+    public function getTask($id)
+    {
+        $select = $this->sql->select();
+        $select->where(array('id' => $id));
+    
+        $statement = $this->sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute()->current();
+        if (!$result) {
+            return null;
+        }
+    
+        $hydrator = new ClassMethods();
+        $task = new TaskEntity();
+        $hydrator->hydrate($result, $task);
+    
+        return $task;
+    }
+    
+    public function deleteTask($id)
+    {
+        $delete = $this->sql->delete();
+        $delete->where(array('id' => $id));
+    
+        $statement = $this->sql->prepareStatementForSqlObject($delete);
+        return $statement->execute();
     }
     
     

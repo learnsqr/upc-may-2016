@@ -4,8 +4,11 @@ namespace Album\Model;
 // use Zend\Db\Adapter\Adapter;
 use Album\Model\albumEntity;
 use Zend\Stdlib\Hydrator\ClassMethods;
+
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Insert;
+
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Paginator\Adapter\DbSelect;
 
@@ -66,7 +69,38 @@ class AlbumMapper
         return $collection;
     }
     
-    public function save(AlbumEntity $album)
+    public function insert($data)
+    {
+        $data = (array)$data;
+       
+    
+        $class = new \ReflectionClass($this->entity);
+        $entity = $class->newInstance();
+    
+        $class = new \ReflectionClass($this->hydrator);
+        $hydrator = $class->newInstance();
+    
+        $hydrator->hydrate($data, $entity);
+        //$entity->populate($data);
+        $data = $hydrator->extract($entity);
+    
+        $action = new Insert($this->tableName);
+        $action->values($data);
+        //var_dump($action->getSqlString());
+        $statement = $this->adapterMaster->createStatement();
+        $action->prepareStatement($this->adapterMaster, $statement);
+        $driverResult = $statement->execute();
+        $hydrator->hydrate($data, $entity);
+        
+        
+          
+        // $hydrator->hydrate($data, $entity);
+        // $data['email']= $this->adapterMaster->getDriver()->getLastGeneratedValue();
+    
+        return $entity;
+    }
+    
+    public function save2(AlbumEntity $album)
     {
         $hydrator = new ClassMethods();
         $data = $hydrator->extract($album);

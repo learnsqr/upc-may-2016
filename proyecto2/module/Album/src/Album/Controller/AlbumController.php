@@ -19,15 +19,13 @@ class AlbumController extends AbstractActionController
     public function addAction()
     {
         $form = new AlbumForm();
-        $entity = new AlbumEntity();
-        $form->bind($entity);
-    
+        
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
-                $mapper->save($entity);
+                $mapper->insert($form->getData());
     
                 // Redirect to list 
                 return $this->redirect()->toRoute('album');

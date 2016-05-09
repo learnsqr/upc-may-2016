@@ -8,6 +8,16 @@ class AlbumController extends AbstractActionController
 {
     public function indexAction()
     {
+        echo "aqui";
+        
+        $dmMaster = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+        
+        echo "<pre>";
+        print_r($dmMaster);
+        echo "</pre>";
+            
+        die;
+        
         return new ViewModel();
     }
     

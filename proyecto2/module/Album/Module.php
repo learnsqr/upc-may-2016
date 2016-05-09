@@ -29,4 +29,18 @@ class Module
             ),
         );
     }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(               
+                'Album\Model\AlbumMapper' => function ($sm) {                        
+                        $adapterMaster 	= $sm->get('dbMasterAdapter');
+                        $adapterSlave 	= $sm->get('dbSlaveAdapter');
+                        $mapper = new \Album\Model\AlbumMapper($adapterMaster, $adapterSlave);
+                        return $mapper;
+                },  
+            ),
+        );
+    }
 }

@@ -14,7 +14,38 @@ class AlbumController extends AbstractActionController
         $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
         $data = $mapper->fetchAll();
         
-        return new ViewModel(array('albums' => $data));
+        
+//         $result = new ViewModel();
+//         $result->setTerminal(true);
+//         $result->setVariables(array('albums' => $data));
+//         return $result;
+        
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+
+        $response->setContent($data);
+        return $response;
+      
+    }
+    
+    public function apiAction()
+    {
+        $id = (int)$this->params('id');
+        if (!$id) {
+            return $this->redirect()->toRoute('album', array('action'=>'add'));
+        }
+        $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+        $data = $mapper->fetch($this->params('id'));
+        
+        
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+      
+        
+        $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
+        $response->setContent(json_encode((array)$data));
+        return $response;
+      
     }
     
     public function addAction()
@@ -39,7 +70,7 @@ class AlbumController extends AbstractActionController
     {
         $id = (int)$this->params('id');
         if (!$id) {
-            return $this->redirect()->toRoute('task', array('action'=>'add'));
+            return $this->redirect()->toRoute('album', array('action'=>'add'));
         }        
         $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
         $data = $mapper->fetch($this->params('id'));

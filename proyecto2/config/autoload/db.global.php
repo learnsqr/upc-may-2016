@@ -8,8 +8,8 @@ return array(
 				'driver_options'  => array(
 						PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
 				),
-				'dsn'       => 'mysql:dbname=proyecto2;host=localhost',
-				'database'  => 'proyecto2',
+				'dsn'       => 'mysql:dbname=zf2;host=localhost',
+				'database'  => 'zf2',
 				'username'  => 'root',
 				'password'  => '',
 				'hostname'  => 'localhost',
@@ -22,8 +22,8 @@ return array(
 								'driver_options'  => array(
 										PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
 								),
-								'dsn'       => 'mysql:dbname=proyecto2;host=localhost',
-								'database'  => 'proyecto2',
+								'dsn'       => 'mysql:dbname=zf2;host=localhost',
+								'database'  => 'zf2',
 								'username'  => 'root',
 								'password'  => '',
 								'hostname'  => 'localhost',
@@ -34,8 +34,8 @@ return array(
 								'driver_options'  => array(
 										PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
 								),
-								'dsn'       => 'mysql:dbname=proyecto2;host=localhost',
-								'database'  => 'proyecto2',
+								'dsn'       => 'mysql:dbname=zf2;host=localhost',
+								'database'  => 'zf2',
 								'username'  => 'root',
 								'password'  => '',
 								'hostname'  => 'localhost',

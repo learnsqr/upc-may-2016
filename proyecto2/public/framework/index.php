@@ -19,11 +19,11 @@ require 'init_autoloader.php';
 
 if($_SERVER['APPLICATION_ENV']=='development')
 {
-    Zend\Mvc\Application::init(require '/config/application.config.dev.php')->run();
+    Zend\Mvc\Application::init(require 'config/application.config.dev.php')->run();
 }
 else
 {
     // Run the application!
-    Zend\Mvc\Application::init(require '/config/application.config.php')->run();
+    Zend\Mvc\Application::init(require 'config/application.config.php')->run();
 }
 

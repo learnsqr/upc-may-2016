@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Album\Model\AlbumEntity;
 use Album\Form\AlbumForm;
+use Zend\Form\FormInterface;
 
 class AlbumController extends AbstractActionController
 {
@@ -34,21 +35,63 @@ class AlbumController extends AbstractActionController
     
         return array('form' => $form);
     }
-    
-    public function insertAction()
+    public function editAction()
     {
-        return new ViewModel();
+        $id = (int)$this->params('id');
+        if (!$id) {
+            return $this->redirect()->toRoute('task', array('action'=>'add'));
+        }        
+        $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+        $data = $mapper->fetch($this->params('id'));
+
+        
+        echo "<pre>";
+        print_r((array)$data);
+        echo "</pre>";
+        
+        
+        $form = new AlbumForm();
+        $form->bind($data);
+    
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $mapper->update($data);
+                return $this->redirect()->toRoute('album');
+            }
+        }
+    
+        return array(
+            'id' => $id,
+            'form' => $form,
+        );
     }
     
-    public function updateAction()
-    {
-        return new ViewModel();
-    }
+   
     
     public function deleteAction()
     {
-        
-        return new ViewModel();
+    	$id = $this->params('id');
+    	
+    	$mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+    	$data = $mapper->fetch($this->params('id'));
+    	
+    	if (!$data) {
+    		return $this->redirect()->toRoute('album');
+    	}    
+    	$request = $this->getRequest();
+    	if ($request->isPost()) {
+    		if ($request->getPost()->get('del') == 'Yes') {
+    		    $mapper->delete($id);
+    		}    
+    		return $this->redirect()->toRoute('album');
+    	}
+    
+    	return array(
+    			'id' => $id,
+    			'album' => $data
+    	);
     }
 }
     

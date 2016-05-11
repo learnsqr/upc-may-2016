@@ -8,6 +8,7 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Insert;
+use Zend\Db\Sql\Update;
 
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Paginator\Adapter\DbSelect;
@@ -31,6 +32,36 @@ class AlbumMapper
         $this->adapterSlave = $adapterSlave;
     }
     
+    public function fetch($id)
+    {
+        $action = new Select($this->tableName);
+        $action->where(array('id' => $id));
+        /**
+         * Filters
+         */
+    
+//         echo "<pre>";
+//         print_r($action->getSqlString());
+//         echo "</pre>";
+    
+       
+        $class = new \ReflectionClass($this->entity);
+        $entity = $class->newInstance();
+    
+        $class = new \ReflectionClass($this->hydrator);
+        $hydrator = $class->newInstance();
+    
+        $statement = $this->adapterSlave->createStatement();
+        $action->prepareStatement($this->adapterSlave, $statement);
+        $driverResult = $statement->execute();
+    
+        $resultset = new HydratingResultSet;
+        $resultset->setHydrator($hydrator);
+        $resultset->setObjectPrototype($entity);
+        $resultset->initialize($driverResult);
+        
+        return $resultset->current();
+    }
     
     public function fetchAll($filter=null)
     {    
@@ -72,8 +103,7 @@ class AlbumMapper
     public function insert($data)
     {
         $data = (array)$data;
-       
-    
+           
         $class = new \ReflectionClass($this->entity);
         $entity = $class->newInstance();
     
@@ -92,13 +122,53 @@ class AlbumMapper
         $driverResult = $statement->execute();
         $hydrator->hydrate($data, $entity);
         
+        return $entity;
+    }
+    
+    public function update($data, $id)
+    {
+        $data = (array)$data;
+         
+        $class = new \ReflectionClass($this->entity);
+        $entity = $class->newInstance();
+    
+        $class = new \ReflectionClass($this->hydrator);
+        $hydrator = $class->newInstance();
+    
+        $hydrator->hydrate($data, $entity);
+        //$entity->populate($data);
+        $data = $hydrator->extract($entity);
+    
+        $action = new Update($this->tableName);
+        $action->where('id='.$id);
+        $action->values($data);
         
-          
-        // $hydrator->hydrate($data, $entity);
-        // $data['email']= $this->adapterMaster->getDriver()->getLastGeneratedValue();
+        echo "<pre>";
+        print_r($action->getSqlString());
+        echo "</pre>";
+        
+        die;
+        
+        
+        $statement = $this->adapterMaster->createStatement();
+        $action->prepareStatement($this->adapterMaster, $statement);
+        $driverResult = $statement->execute();
+        $hydrator->hydrate($data, $entity);
     
         return $entity;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public function save2(AlbumEntity $album)
     {

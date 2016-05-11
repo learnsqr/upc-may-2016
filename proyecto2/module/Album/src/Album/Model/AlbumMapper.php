@@ -9,6 +9,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
+use Zend\Db\Sql\Delete;
 
 use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Paginator\Adapter\DbSelect;
@@ -36,14 +37,6 @@ class AlbumMapper
     {
         $action = new Select($this->tableName);
         $action->where(array('id' => $id));
-        /**
-         * Filters
-         */
-    
-//         echo "<pre>";
-//         print_r($action->getSqlString());
-//         echo "</pre>";
-    
        
         $class = new \ReflectionClass($this->entity);
         $entity = $class->newInstance();
@@ -71,7 +64,7 @@ class AlbumMapper
          * Filters
          */
     
-        //         echo $select->getSqlString();
+        // echo $select->getSqlString();
     
         $class = new \ReflectionClass($this->entity);
         $entity = $class->newInstance();
@@ -111,7 +104,6 @@ class AlbumMapper
         $hydrator = $class->newInstance();
     
         $hydrator->hydrate($data, $entity);
-        //$entity->populate($data);
         $data = $hydrator->extract($entity);
     
         $action = new Insert($this->tableName);
@@ -136,91 +128,32 @@ class AlbumMapper
         $hydrator = $class->newInstance();
     
         $hydrator->hydrate($data, $entity);
-        //$entity->populate($data);
         $data = $hydrator->extract($entity);
     
         $action = new Update($this->tableName);
-        $action->where('id='.$id);
-        $action->values($data);
-        
-        echo "<pre>";
-        print_r($action->getSqlString());
-        echo "</pre>";
-        
-        die;
-        
-        
+        $action->where(array('id'=>$id));
+        $action->set($data);
+       
         $statement = $this->adapterMaster->createStatement();
         $action->prepareStatement($this->adapterMaster, $statement);
         $driverResult = $statement->execute();
+       
         $hydrator->hydrate($data, $entity);
     
         return $entity;
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public function save2(AlbumEntity $album)
+    public function delete($id)
     {
-        $hydrator = new ClassMethods();
-        $data = $hydrator->extract($album);
-    
-        if ($album->id) {
-            // update action
-            $action = $this->sql->update();
-            $action->set($data);
-            $action->where(array('id' => $album->getId()));
-        } else {
-            // insert action
-            $action = $this->sql->insert();
-            unset($data['id']);
-            $action->values($data);
-        }
-        $statement = $this->sql->prepareStatementForSqlObject($action);
-        $result = $statement->execute();
-    
-        if (!$album->id) {
-            $album->id=$result->getGeneratedValue();
-        }
-        return $result;
-    
-    }
-    
-    public function getTask($id)
-    {
-        $select = $this->sql->select();
-        $select->where(array('id' => $id));
-    
-        $statement = $this->sql->prepareStatementForSqlObject($select);
-        $result = $statement->execute()->current();
-        if (!$result) {
-            return null;
-        }
-    
-        $hydrator = new ClassMethods();
-        $task = new TaskEntity();
-        $hydrator->hydrate($result, $task);
-    
-        return $task;
-    }
-    
-    public function deleteTask($id)
-    {
-        $delete = $this->sql->delete();
-        $delete->where(array('id' => $id));
-    
-        $statement = $this->sql->prepareStatementForSqlObject($delete);
-        return $statement->execute();
+        $action = new Delete($this->tableName);
+        $action->where(array('id'=>$id));
+       
+        $statement = $this->adapterMaster->createStatement();
+        $action->prepareStatement($this->adapterMaster, $statement);
+        $driverResult = $statement->execute();
+        
+        return $driverResult;
     }
     
     

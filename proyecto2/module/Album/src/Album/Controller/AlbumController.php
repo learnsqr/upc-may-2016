@@ -43,21 +43,16 @@ class AlbumController extends AbstractActionController
         }        
         $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
         $data = $mapper->fetch($this->params('id'));
-
-        
-        echo "<pre>";
-        print_r((array)$data);
-        echo "</pre>";
-        
         
         $form = new AlbumForm();
         $form->bind($data);
-    
+        $form->setData((array)$data);
+                
         $request = $this->getRequest();
         if ($request->isPost()) {
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $mapper->update($data);
+                $mapper->update($request->getPost(), $id);
                 return $this->redirect()->toRoute('album');
             }
         }

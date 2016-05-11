@@ -38,6 +38,8 @@ class AlbumMapper
         $action = new Select($this->tableName);
         $action->where(array('id' => $id));
        
+        //echo $action->getSqlString();
+        
         $class = new \ReflectionClass($this->entity);
         $entity = $class->newInstance();
     

@@ -17,7 +17,7 @@ if (php_sapi_name() === 'cli-server') {
 // Setup autoloading
 require 'init_autoloader.php';
 
-if($_SERVER['APPLICATION_ENV']=='development')
+if(@$_SERVER['APPLICATION_ENV']=='development')
 {
     Zend\Mvc\Application::init(require '/config/application.config.dev.php')->run();
 }

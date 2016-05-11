@@ -9,12 +9,62 @@ use Zend\Form\FormInterface;
 
 class AlbumController extends AbstractActionController
 {
+    
+    
     public function indexAction()
+    {
+        $request = $this->getRequest();        
+        $method = $request->getMethod();        
+        switch ($method)
+        {
+            case 'GET':
+                $id = (int)$this->params('id');
+                if (!$id) {
+                    return $this->get($id);
+                }
+                else
+                    return $this->getAll();
+            break;
+            case 'POST':
+                break;
+            case 'PATCH':
+                break;
+            case 'DELETE':
+                break;
+            case 'OPTIONS':
+                break;
+            default:
+                $this->getall();
+            break;
+            
+        }
+       
+        die;
+    }
+    
+    public function getAll()
     {
         $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
         $data = $mapper->fetchAll();
+
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+        $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
+        $response->setContent(json_encode((array)$data->getCurrentItems()));
+        return $response;    
+    }
+    
+    public function get($id)
+    {        
+        $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
+        $data = $mapper->fetch($this->params('id'));
         
-        return new ViewModel(array('albums' => $data));
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+        $response->getHeaders()->addHeaderLine('Content-Type', 'application/json');
+        $response->setContent(json_encode((array)$data));
+        
+        return $response;    
     }
     
     public function addAction()

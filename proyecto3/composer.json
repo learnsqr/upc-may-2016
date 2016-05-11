@@ -1,0 +1,24 @@
+{
+    "name": "zendframework/skeleton-application",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.5",
+        "zendframework/zendframework": "~2.5",
+        "zfcampus/zf-apigility": "~1.0",
+    	"zfcampus/zf-apigility-documentation-swagger": "~1.0-dev",
+        "zfcampus/zf-apigility-welcome": "~1.0-dev"
+        
+    },
+    "require-dev": {
+        "zfcampus/zf-apigility-admin": "~1.0@dev",
+        "zfcampus/zf-apigility-documentation": "~1.0",
+        "zfcampus/zf-development-mode": "~2.0",
+        "phpunit/phpunit": "~4.0"
+    }
+}

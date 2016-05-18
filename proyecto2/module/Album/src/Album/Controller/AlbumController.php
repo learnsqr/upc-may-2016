@@ -6,11 +6,31 @@ use Zend\View\Model\ViewModel;
 use Album\Model\AlbumEntity;
 use Album\Form\AlbumForm;
 use Zend\Form\FormInterface;
+use Album\Exception\ProblemException;
 
 class AlbumController extends AbstractActionController
 {
+    
+    public function throwAction()
+    {
+       
+//         try {
+//             throw new ProblemException("My exception");
+//         } catch (ProblemException  $e) {
+//             echo "Caught exception $e\n";
+//             exit;
+//         }
+        
+        
+//         throw new ProblemException('Some Error', 404);
+        throw new \DomainException('Some Error', 404);
+          
+    }
+    
     public function indexAction()
     {
+
+        
         $mapper = $this->getServiceLocator()->get('Album\Model\AlbumMapper');
         $data = $mapper->fetchAll();
         

@@ -12,5 +12,7 @@
  */
 
 return array(
-   
+//     'translator' => array(
+//         'locale' => 'es_ES'
+//     ),
 );

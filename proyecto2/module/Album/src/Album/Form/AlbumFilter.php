@@ -26,7 +26,20 @@ class AlbumFilter extends InputFilter
                     'name' => 'StringLength',
                     'options' => array(
                         'encoding' => 'UTF-8',
-                        'max' => 100
+                        'min' => 2,
+                        'max' => 7,
+                        'messages' => array(
+                            'stringLengthTooShort' => 'Value between 2 to 100 character!'
+                           
+                        ),
+                    ),
+                ),
+                array(
+                    'name' =>'NotEmpty',
+                    'options' => array(
+                        'messages' => array(
+                            \Zend\Validator\NotEmpty::IS_EMPTY => 'Please enter User Name!'
+                        ),
                     ),
                 ),
             ),

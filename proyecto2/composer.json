@@ -9,6 +9,8 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.5",
-        "zendframework/zendframework": "~2.5"
+        "zendframework/zendframework": "~2.5",
+        "elemental/elem-validators": "dev-master",
+        "ghislainf/zf2-whoops": "dev-master"
     }
 }

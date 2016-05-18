@@ -1,0 +1,16 @@
+
+Login User
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('login', array('action' => 'index')));
+$form->get('submit')->setAttribute('value', 'Login');
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('password'));
+?>
+<div>
+<?php echo $this->formInput($form->get('submit')); ?>
+</div>
+<?php
+echo $this->form()->closeTag($form);
